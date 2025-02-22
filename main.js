@@ -1,26 +1,30 @@
-import {app, BrowserWindow} from 'electron';
-import path from 'path';
-import url from 'url';
-import { fileURLToPath } from 'url';
-const __dirname = path.dirname(fileURLToPath(import.meta.url));
+const { app, BrowserWindow, ipcRenderer } = require('electron');
+const url = require('url');
+const path = require('path');
+const { ipcMain } = require('electron');
 
-function createMainWindow() 
-{
-  const mainWindow = new BrowserWindow({    title:'Electron', width: 800, height: 600  });
+function createMainWindow() {
+  mainWindow = new BrowserWindow({
+    title: 'My buddy app',
+    width: 800,
+    height: 600,
+    webPreferences: {
+      contextIsolation: true,
+      nodeIntegration: true,
+      preload: path.join(__dirname, 'preload.js'),
+    },
+  });
+
   mainWindow.webContents.openDevTools();
-
-  const startUrl=url.format({
-    pathname: path.join(__dirname, './my-gym/src/index.tsx'),
-    protocol: 'file:',
-    slashes: true
-  })
+  const startUrl = url.format({
+    pathname: path.join(__dirname, './app/build/index.html'),
+    protocol: 'file',
+  });
 
   mainWindow.loadURL('http://localhost:3000');
-
-  mainWindow.on('closed', () => {
-    app.quit();
-  });
 }
 
 app.whenReady().then(createMainWindow);
-    
+ipcMain.on('name', (event, arg) => {
+  console.log(arg);
+});

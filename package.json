@@ -2,7 +2,6 @@
   "name": "gym",
   "version": "1.0.0",
   "main": "main.js",
-  "type": "module",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "start": "electronmon ."
@@ -11,8 +10,19 @@
   "license": "ISC",
   "description": "",
   "dependencies": {
-    "electron": "^34.2.0",
     "electronmon": "^2.0.3",
-    "react-router-dom": "^7.2.0"
+    "react-router-dom": "^7.2.0",
+    "yup": "^1.6.1"
+  },
+  "build": {
+    "extends": null,
+    "files": [
+      "**/*"
+    ],
+    "asar": true
+  },
+  "devDependencies": {
+    "electron": "^34.2.0",
+    "electron-builder": "^25.1.8"
   }
 }
