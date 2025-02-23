@@ -1,0 +1,77 @@
+.Container 
+{
+    display: grid;
+    grid-template-rows: auto auto auto; /* Changed to 3 rows */
+    justify-items: center;
+    align-items: center;
+    height: 60vh;
+}
+
+
+.homeButtonItem 
+{
+    grid-row: 1; /* Place homeButtonItems in first row */
+    appearance: homeButtonItem;
+    background-color: #ffb01d;
+    background-image: none;
+    border: 1px solid #000;
+    border-radius: 10px;
+    box-shadow: #000000 4px 4px 0 0,#000 4px 4px 0 1px;
+    box-sizing: border-box;
+    color: #000000;
+    cursor: pointer;
+    display: inline-block;
+    font-size: 20px;
+    font-weight: 500;
+    line-height: 20px;
+    margin: 0 5px 10px 0;
+    overflow: visible;
+    padding: 12px 40px;
+    text-align: center;
+    text-transform: none;
+    touch-action: manipulation;
+    user-select: none;
+    -webkit-user-select: none;
+    vertical-align: middle;
+    white-space: nowrap;
+    margin: 20px;
+    width: 200px;
+    height: 50px;
+    
+}
+
+.homeButtonItem:focus 
+{
+    text-decoration: none;
+}
+
+.homeButtonItem:hover 
+{
+    text-decoration: none;
+}
+
+.homeButtonItem:active 
+{
+    box-shadow: rgba(0, 0, 0, .125) 0 3px 5px inset;
+    outline: 0;
+}
+
+.homeButtonItem:not([disabled]):active
+{
+    box-shadow: #000000 2px 2px 0 0, #000 2px 2px 0 1px;
+    transform: translate(2px, 2px);
+}
+
+.homeInputItem {
+    grid-row: 2; 
+    justify-self: center;
+    align-self: center;
+    padding: 6px;
+    border-radius: 10px;
+    margin-top: 8px;
+    margin-right: 16px;
+    font-size: 17px;
+    text-align: center;
+    width:480px; 
+}
+

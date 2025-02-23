@@ -1,0 +1,21 @@
+body {
+    margin: 0;
+    padding: 0;
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+    background-image: url('./backgroundWallpapaer.png');
+    background-color: #ffb01d;
+    background-position: center;
+    min-height: 100vh;
+    width: 100%;
+    font-family: "Amiri", serif;
+    font-weight: 400;
+    font-style: normal;
+}
+img {
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+    width: 350px; /* Set the desired width */
+    height: auto; /* Maintain aspect ratio */
+    
+}

@@ -6,6 +6,7 @@ const homeDir = electron?.homeDir?.() || "Not available";
 console.log(homeDir);
     return (
         <div>
+            asd
             <a href="https://www.youtube.com/watch?v=2J2t7Nzr4yQ">Workout plan for u !</a>
             <br/>
             <Outlet />
