@@ -1,7 +1,7 @@
 import React from 'react';
 import Home from './pages/homePage/Home';
 import {NewSubscription} from './pages/newSubscription/NewSubscription';
-import {RenewSubscription} from './pages/renewSubscription/renewSubscription';
+import {RenewSubscription} from './pages/renewSubscription/RenewSubscription';
 import Work from './components/Work';
 
 import { Routes, Route } from 'react-router-dom';

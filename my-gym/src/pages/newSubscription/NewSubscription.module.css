@@ -1,0 +1,99 @@
+.Container {
+    background-color: rgba(249, 203, 67, 0.3); /* شبه شفاف */
+    border-radius: 20px;
+    box-sizing: border-box;
+    width: 400px;
+    height: auto;
+    padding: 20px;
+    text-align: center;
+    /* Changed from absolute positioning to better handle dynamic content */
+    margin: 0 auto;
+    /* Add some margin at the top instead of absolute positioning */
+    
+}
+
+
+.containerForm {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.FormLabel {
+    color: #000000;
+    font-size: 16px;
+    font-weight: 600;
+    margin-top: 15px;
+    display: block;
+    text-align: right;
+    width: 100%;
+}
+
+input,
+select {
+    background-color: #e2e2e2;
+    border-radius: 12px;
+    border: none;
+    color: #000000;
+    font-size: 18px;
+    height: 40px;
+    outline: none;
+    padding: 10px;
+    width: 100%;
+    margin-top: 5px;
+    box-sizing: border-box;
+    direction: rtl; /* Right-to-left direction */
+    text-align: right; /* Align text to the right */
+}
+
+input:focus,
+select:focus {
+    border: 1px solid rgb(93, 83, 62);
+}
+
+.error_message {
+    color: red;
+    font-size: 20px;
+    margin-top: 5px;
+    width: 100%;
+    text-align: right;
+    /* Fixed height for error message space */
+    min-height: 20px;
+}
+
+button {
+    background-color: rgb(0, 0, 0);
+    border-radius: 12px;
+    border: none;
+    color: #eee;
+    cursor: pointer;
+    font-size: 18px;
+    height: 50px;
+    margin-top: 20px;
+    width: 100%;
+}
+
+button:active {
+    background-color: rgb(168, 156, 41);
+}
+
+input::placeholder {
+    text-align: right; /* Align placeholder text to the right */
+}
+option 
+{
+    direction: rtl; /* Right-to-left direction */
+    text-align: right; /* Align text to the right */
+}
+.back_button 
+{
+    position: absolute;
+    top: 10px;
+    left: 10px;
+    height: 60px;
+    border: none;
+    border-radius: 100px;
+    cursor: pointer;
+    width: 5%;
+    
+}
