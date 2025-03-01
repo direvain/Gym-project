@@ -5,6 +5,7 @@ export function RenewSubscription() {
   const {
     register,
     handleSubmit,
+    reset,
     setError,
     formState: { errors },
   } = useForm({
@@ -19,18 +20,19 @@ export function RenewSubscription() {
     }
     if (values.playerName) {
       console.log(values); // Only submit if no errors
+      reset();
     }
   };
 
-  function goBack() 
-  {
-    window.history.back(); // Go back to the previous page
-  }
+  function goBack() {window.history.back(); /* Go back to the previous page*/}
 
   return (
-    <div>    
+    <div>
+    <img className={style.homeImg} src="city_Gym_Icon.png" alt="My Gym Logo" width="200" height="200"/>
       <div className={style.reNewContainer}>
         <form className={style.reNewForm} onSubmit={handleSubmit(onSubmit)}>
+        <img src="cancel.png" alt="My Gym Logo" className={style.back_button} onClick={goBack}/>
+
           <label className={style.reNewlabel}>اسم اللاعب</label>
           <input type='text' {...register('playerName')} placeholder='اسم اللاعب' />
           {errors.playerName?.message && (
@@ -51,7 +53,7 @@ export function RenewSubscription() {
         <button type="submit">إنشاء رمز</button>
         </form>
       </div>
-      <img src="icon-back.png" alt="My Gym Logo" className={style.back_button} onClick={goBack}/>
     </div>
+
   );
 }

@@ -2,8 +2,7 @@ import React from 'react';
 import Home from './pages/homePage/Home';
 import {NewSubscription} from './pages/newSubscription/NewSubscription';
 import {RenewSubscription} from './pages/renewSubscription/RenewSubscription';
-import Work from './components/Work';
-
+import { PlayerQrcode } from './pages/playerQrcode/PlayerQrcode';
 import { Routes, Route } from 'react-router-dom';
 
 function App() {
@@ -13,6 +12,7 @@ function App() {
         <Route path="/" element={<Home />}/>
         <Route path="/NewSubscription" element={<NewSubscription />}/>
         <Route path="/RenewSubscription" element={<RenewSubscription />}/>
+        <Route path="/PlayerQrcode" element={<PlayerQrcode />}/>
       </Routes>
     </div>
   );

@@ -75,3 +75,11 @@
     width:480px; 
 }
 
+.homeImg {
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+    width: 350px; /* Set the desired width */
+    height: 260px; /* Maintain aspect ratio */
+    
+}

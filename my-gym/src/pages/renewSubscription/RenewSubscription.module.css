@@ -1,15 +1,26 @@
+body{
+    display: flex;
+    justify-content: center;
+    align-items: center; 
+}
 .reNewContainer
 {
+    display: flexbox;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
     background-color: rgba(249, 203, 67, 0.3); /* شبه شفاف */
     border-radius: 20px;
     box-sizing: border-box;
     width: 400px;
-    height: auto;
+    height: 100;
     padding: 20px;
     text-align: center;
     /* Changed from absolute positioning to better handle dynamic content */
     margin: 0 auto;
     /* Add some margin at the top instead of absolute positioning */
+    box-shadow: 8px 8px 24px 0px rgba(184, 130, 23, 1); /* Adds a subtle glow */
+
     
 }
 .reNewForm 
@@ -17,6 +28,7 @@
     display: flex;
     flex-direction: column;
     align-items: center;
+    
 }
 
 .reNewLabel 
@@ -90,13 +102,31 @@ input::placeholder {
 
 .back_button 
 {
+    
+    align-self: flex-start; /* Aligns to the left in an RTL container */
+    margin-bottom: 1px; /* Space between the button and the form elements */
+    cursor: pointer;
+    width: 24px; /* Adjust size as needed */
+    height: 24px; /* Adjust size as needed */
+    order: -1; /* Ensures it appears at the top of the flex container */
+}
+.back_button:hover {
+    background-color: #FFB01D;
+    border-radius: 50%;
+    transform: scale(1.15); /* Slightly enlarges the button */
+    box-shadow: 0 0 8px rgba(255, 176, 29, 0.5); /* Adds a subtle glow */
+    transition: background-color 0.3s ease, 
+                transform 0.3s ease, 
+                box-shadow 0.3s ease;
+}
+.back_button:active {
+    transform: scale(0.95); /* Creates a "press" effect */
+    background-color: #FFB01D; /* Solid color when pressed */
+  }
+.homeImg {
     position: absolute;
     top: 10px;
     left: 10px;
-    height: 60px;
-    border: none;
-    border-radius: 100px;
-    cursor: pointer;
-    width: 5%;
-    
+    width: 14%;
+    height: 20%;
 }
