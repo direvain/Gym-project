@@ -12,7 +12,7 @@ function App() {
         <Route path="/" element={<Home />}/>
         <Route path="/NewSubscription" element={<NewSubscription />}/>
         <Route path="/RenewSubscription" element={<RenewSubscription />}/>
-        <Route path="/PlayerQrcode" element={<PlayerQrcode />}/>
+        <Route path="/PlayerQrcode" element={<PlayerQrcode/>}/>
       </Routes>
     </div>
   );

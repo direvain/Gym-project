@@ -1,38 +1,36 @@
+.card{
+    /* background-color: #272424;
+    background-image: url("../../../public/qrcodeWallpaper.png");
+    background-size: 80% 40%;  */
+    width: 290px;
+    height: 600px;
+}
 .PlayerViewContainer{
     display: flex;
     flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    color: #ffffff;
-    width: 75%;
-    height: 25%;
-    margin: 0 auto;
-    background-color: #ffb01d;
-    /* background-image: url("https://www.transparenttextures.com/patterns/black-felt.png");  */
-    
-    /* background-image: url("https://www.transparenttextures.com/patterns/crissxcross.png"); */
-    background-image: url('../../../public/backgroundWallpapaer.png');
-    /* background-image: url("https://www.transparenttextures.com/patterns/black-felt.png"); */
-    border: 1px solid #000;
-  
+    align-items:center;
 }
 
-.playerName
-{
-    font-size: 23px;
-}
+.playerLabel{
+    font-size: 25px;
+    margin-top: 6px;
+    margin-bottom: 5px;
+    color: #fff;
+    border: #272424; 
 
+}
 
 .PlayerViewLogo{
-    display: block;
-    margin-left:initial;
-    margin-right: auto;
+    display: flex;
+    flex-direction: column; 
+    align-items: center;
+    justify-content: center;
+    width: 80%;
+    height: 40%;
 }
 
 .homeImg{
-    display: block;
-    margin-top: auto;
-    margin-bottom: auto;
+    margin: auto;
     width: 10%;
     height: 20%;
 }
