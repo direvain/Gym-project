@@ -13,7 +13,7 @@ interface PlayerQrcodeProps
     downloadName:string;
     onDownloadComplete: () => void; // Callback to notify when download is complete
 }
-export function  PlayerQrcodeInfo({ value, downloadName, name, date, onDownloadComplete, age, weight, phoneNumber }: PlayerQrcodeProps)
+export function  playerQrcodeInfo({ value, downloadName, name, date, onDownloadComplete, age, weight, phoneNumber }: PlayerQrcodeProps)
 {
     const cardRef = useRef<HTMLDivElement>(null);
     const [isPopping, setIsPopping] = useState(false); // State for pop animation
@@ -62,6 +62,8 @@ export function  PlayerQrcodeInfo({ value, downloadName, name, date, onDownloadC
             style={{
             backgroundImage: 'url("qrcodeWallpaper.png")', // Add your image path here
             backgroundColor: '#000',
+            backgroundSize: 'cover',
+            backgroundPosition:'center'
             }}
         >
             <img
@@ -71,12 +73,13 @@ export function  PlayerQrcodeInfo({ value, downloadName, name, date, onDownloadC
             crossOrigin="anonymous" // Add cross-origin attribute for external images
             />
             <br />
+            <br />
             <QRCode
             value={value || "Unknown"}
             ecLevel="L"
-            size={130}
+            size={180}
             fgColor="#000"
-            bgColor="#ffb01d"
+            bgColor="#fff"
             quietZone={10}
             removeQrCodeBehindLogo={true}
             />
@@ -87,14 +90,9 @@ export function  PlayerQrcodeInfo({ value, downloadName, name, date, onDownloadC
             <label className={style.playerLabel}>{phoneNumber || "No phone Number"}</label>
             <label className={style.playerLabel}>{date || "No Date"}</label>
         </div>
-        <div className = {style.buttonsplit}>
-            <button onClick={saveAsImage} className={style.saveButton} disabled={isLoading}>
-                {isLoading ? "جاري الحفظ..." : "حفظ الصورة"}
-            </button>
-            <button className={style.saveButton}>
-                تجديد الاشتراك
-            </button>
-        </div>
+        <button onClick={saveAsImage} className={style.saveButton} disabled={isLoading}>
+            {isLoading ? "جاري الحفظ..." : "حفظ الصورة"}
+        </button>
         </div>
     );
 }

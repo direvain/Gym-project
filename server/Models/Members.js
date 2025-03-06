@@ -1,43 +1,31 @@
 import mongoose from 'mongoose';
 import { bool, boolean } from 'yup';
-
 const memberSchema = new mongoose.Schema({
-    _id:
-    {
-        type: Number,
+    name: {
+        type: String,
         required: true,
-        unique: true
     },
-    name: 
-    {
-        type: String ,
-        required: true,
-        unique: true
-    },
-    age:
-    {
+    age: {
         type: Number,
         required: true
     },
-    weight: 
-    {
+    weight: {
         type: Number,
         required: true
     },    
-    subscriptionDuration: 
-    {
-            type: Boolean,
+    phoneNumber: {
+        type: String,
+        unique: true
     },
-    subscriptionStartDate: 
-    {
-            type: Date,
-            required: true
+    subscriptionDuration: {
+        type: String,
+        required: true
     },
-    subscriptionEndDate: 
-    {
-            type: Date,
-            required: true
-    },
+    qrCodeValue:{
+        type: String,
+        required: true,
+        unique: true
+    }
 });
 
 const Members = mongoose.model('Members', memberSchema);
@@ -45,21 +33,19 @@ const Members = mongoose.model('Members', memberSchema);
 
 export default Members;
 
-try {
-    const sampleMember = new Members(
-        {
-        _id: 131228142813122814028,
-        name: "شسيصيشسيص ي",
-        age: 25,
-        weight: 12,
-        subscriptionDuration: 3,
-subscriptionDuration: true,
-subscriptionStartDate: new Date(),
-subscriptionEndDate: new Date(new Date().setFullYear(new Date().getFullYear() + 1))
-    }
-);
-    await sampleMember.save();
-    console.log('Sample member inserted into the Members collection');
-} catch (error) {
-    console.error('Error inserting sample member:', error);
-}
+// try {
+//     const sampleMember = new Members(
+//         {
+//         name: "asdw",
+//         age: 25,
+//         weight: 12,
+//         phoneNumber: "0777211590",
+//         subscriptionDuration: "2025/3/2 - 2025/5/2",
+//         qrCodeValue: "123"
+//     }
+// );
+//     await newplayer.save();
+//     console.log('Sample member inserted');
+// } catch (error) {
+//     console.error('Error inserting sample member:', error);
+// }

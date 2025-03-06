@@ -1,36 +1,148 @@
-.card{
-    /* background-color: #272424;
-    background-image: url("../../../public/qrcodeWallpaper.png");
-    background-size: 80% 40%;  */
+.card {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background-color: #000;
     width: 290px;
-    height: 600px;
+    height: fit-content;  /* Replace 'auto' with 'fit-content' */
+    max-height: 90vh;     /* Optional: Prevent card from being too tall */
+    overflow-y: auto;     /* Optional: Add scrolling if content is very long */
+    z-index: 1000;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    border-radius: 10px;
 }
-.PlayerViewContainer{
+::-webkit-scrollbar {
+    width: 12px;
+    height: 12px;
+}
+
+::-webkit-scrollbar-track {
+    background: #7f7d7f;
+    /* border-radius: 10px; */
+}
+
+::-webkit-scrollbar-thumb {
+    background: #555;
+    border-radius: 10px; 
+}
+
+::-webkit-scrollbar-thumb:hover {
+    background: #313131;
+}
+
+.PlayerViewContainer {
     display: flex;
     flex-direction: column;
-    align-items:center;
-}
-
-.playerLabel{
-    font-size: 25px;
-    margin-top: 6px;
-    margin-bottom: 5px;
-    color: #fff;
-    border: #272424; 
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    height: 100%;
 
 }
 
-.PlayerViewLogo{
+.playerLabel {
+    font-size: 20px;
+    margin-top: 3px;
+    margin-bottom: 2px;
+    color: #ffb01d;
+}
+
+.PlayerViewLogo {
     display: flex;
     flex-direction: column; 
     align-items: center;
     justify-content: center;
-    width: 80%;
-    height: 40%;
+    width: 70%;
+    height: 30%;
 }
 
-.homeImg{
-    margin: auto;
-    width: 10%;
-    height: 20%;
+.saveButton {
+    margin-top: 10px;
+    padding: 10px 20px;
+    background-color: #a47113;
+    color: #fff;
+    border: 2px solid #000000; /* Added solid border with the existing border color */
+    border-radius: 5px;
+    cursor: pointer;
 }
+.saveButton:hover {
+    color: #fff;
+    background-color: #1A1A1A;
+    box-shadow: rgba(0, 0, 0, 0.25) 0 8px 15px;
+    border-color: #996a13; /* Optional: slightly darker green on hover */
+    transform: translateY(-2px);
+  }
+
+.saveButton:disabled {
+    
+    background-color: #ccc;
+    cursor: not-allowed;
+}
+
+.showButton {
+    margin-top: 20px;
+    padding: 10px 20px;
+    background-color: #28a745;
+    color: #fff;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+
+@keyframes pop {
+    0% {
+        transform: translate(-50%, -50%) scale(1);
+    }
+    50% {
+        transform: translate(-50%, -50%) scale(1.1);
+    }
+    100% {
+        transform: translate(-50%, -50%) scale(1);
+    }
+}
+
+.popAnimation {
+    animation: pop 0.3s ease-in-out;
+}
+.buttonsplit
+{
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    grid-template-rows: 1fr;
+    grid-column-gap: 0px;
+    grid-row-gap: 0px;
+}
+
+
+
+
+.button-28 {
+  appearance: none;
+  background-color: transparent;
+  border: 2px solid #1A1A1A;
+  border-radius: 15px;
+  box-sizing: border-box;
+  color: #3B3B3B;
+  cursor: pointer;
+  display: inline-block;
+  font-family: Roobert,-apple-system,BlinkMacSystemFont,"Segoe UI",Helvetica,Arial,sans-serif,"Apple Color Emoji","Segoe UI Emoji","Segoe UI Symbol";
+  font-size: 16px;
+  font-weight: 600;
+  line-height: normal;
+  margin: 0;
+  min-height: 60px;
+  min-width: 0;
+  outline: none;
+  padding: 16px 24px;
+  text-align: center;
+  text-decoration: none;
+  transition: all 300ms cubic-bezier(.23, 1, 0.32, 1);
+  user-select: none;
+  -webkit-user-select: none;
+  touch-action: manipulation;
+  width: 100%;
+  will-change: transform;
+}
+

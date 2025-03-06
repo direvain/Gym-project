@@ -55,7 +55,7 @@ interface PlayerQrcodeProps {
           className={style.PlayerViewContainer}
           style={{
             backgroundImage: 'url("qrcodeWallpaper.png")', // Add your image path here
-            backgroundColor: '#272424',
+            backgroundColor: '#000',
           }}
         >
           <img
@@ -71,7 +71,7 @@ interface PlayerQrcodeProps {
             ecLevel="L"
             size={180}
             fgColor="#000"
-            bgColor="#fff"
+            bgColor="#ffb01d"
             quietZone={10}
             removeQrCodeBehindLogo={true}
           />

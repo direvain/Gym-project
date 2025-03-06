@@ -15,8 +15,24 @@ function Home() {
   
         if (qrCode.startsWith(requiredPrefix)) {
           console.log("✅ Valid QR Code:", qrCode); // Process valid QR code
+          
+          const findPlayer = async ()=>{
+            try{
+              const response = await fetch(
+                `http://localhost:8080/Members/SearchforMembers/${qrCode}`,
+                {
+                  method:'GET'
+                }
+                );
+                const data = await response.json();
+                console.log(data);
+                return data;
+
+            }catch(err){console.log(err)}
+          }
+          
         } else {
-              return;
+          return;
         }
   
         setQrCode(""); // Clear the stored value after logging
@@ -63,13 +79,13 @@ function Home() {
 
       <div className={style.Containerr}>
         <form>
-          <button
+          {/* <button
             className={style.homeButtonItem}
             type="button"
             onClick={() => navigate("/RenewSubscription")}
           >
             تجديد الأشتراك
-          </button>
+          </button> */}
 
           <button
             className={style.homeButtonItem}
@@ -78,13 +94,18 @@ function Home() {
           >
             إشتراك جديد
           </button>
+
+
           <button
             className={style.homeButtonItem}
             type="button"
             onClick={() => navigate("/PlayerQrcode")}
           >
-            جديد
+            إشتراك جديد
           </button>
+
+          
+          <input className="homeInputItem" type="text" placeholder="بحث عن لاعب " />
         </form>
       </div>
       <Outlet />
