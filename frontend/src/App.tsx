@@ -1,7 +1,7 @@
 import React from 'react';
 import Home from './pages/homePage/Home';
 import {NewSubscription} from './pages/newSubscription/NewSubscription';
-import {RenewSubscription} from './pages/renewSubscription/RenewSubscription';
+import {RenewSubscription} from './pages/renewSubscription/renewSubscription';
 import { PlayerQrcodeInfo } from './pages/playerQrcode/PlayerQrcode';
 import { Routes, Route } from 'react-router-dom';
 
