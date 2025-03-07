@@ -16,20 +16,26 @@ function Home() {
         if (qrCode.startsWith(requiredPrefix)) {
           console.log("✅ Valid QR Code:", qrCode); // Process valid QR code
           
-          const findPlayer = async ()=>{
-            try{
+          const findPlayer = async () => {
+            try {
               const response = await fetch(
                 `http://localhost:8080/Members/SearchforMembers/${qrCode}`,
                 {
-                  method:'GET'
+                  method: 'GET'
                 }
-                );
-                const data = await response.json();
-                console.log(data);
-                return data;
-
-            }catch(err){console.log(err)}
+              );
+              const data = await response.json();
+              console.log(data);
+              return data;
+            } catch(err) {
+              console.log(err)
+            }
           }
+          
+          // You need to call the function
+          findPlayer();
+          // Or if you need to use the data
+          // findPlayer().then(data => { /* do something with data */ });
           
         } else {
           return;
@@ -71,7 +77,7 @@ function Home() {
     <div>
       <img
         className={style.homeImg}
-        src="city_Gym_icon.png"
+        src="./images/city_Gym_Icon.png"
         alt="My Gym Logo"
         width="200"
         height="200"

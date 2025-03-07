@@ -39,7 +39,7 @@ export function NewSubscription() {
         body: JSON.stringify(values), // send values as JSON string
       });
       const result = await response.json();
-
+      console.log(result)
       if (response.ok) {
         onSuccess(result);
       } else {
@@ -55,10 +55,10 @@ export function NewSubscription() {
   };
   const onSuccess = (result : any ) => {
     setQrData({
-      downloadName : result.playerName,
-      name: result.playerName,
-      date: result.subscriptionDuration,
-      value: result.id 
+      downloadName : result.name,
+      name: result.name,
+      date: `${result.subscriptionDurationStart} - ${result.subscriptionDurationEnd}`,
+      value: result.qrCodeValue 
     });
   
     setPlayerQrcode(true);
@@ -89,11 +89,10 @@ export function NewSubscription() {
 
   return (
     <div>
-      <img className={style.homeImg} src="city_Gym_Icon.png" alt="My Gym Logo" width="200" height="200" />
+      <img className={style.homeImg} src="./images/city_Gym_Icon.png" alt="My Gym Logo" width="200" height="200" />
       <div className={style.Container}>
         <form className={style.containerForm} onSubmit={handleSubmit(onSubmit)}>
-          <img src="cancel.png" alt="Back" className={style.back_button} onClick={goBack} />
-          
+          <img src="./images/cancel.png" alt="Back" className={style.back_button} onClick={goBack} />
           <label className={style.FormLabel}>اسم اللاعب</label>
           <input type="text" {...register("playerName")} placeholder="اسم اللاعب"  onKeyPress={handleKeyPressForLetter}/>
 
@@ -120,7 +119,7 @@ export function NewSubscription() {
           <button type="submit">إنشاء رمز</button>
         </form>
         
-   <div className={style.Container}> {/* Display the QR code only when playerQrcode is true */}
+   <div className={style.QRcodeContainer}> {/* Display the QR code only when playerQrcode is true */}
     {playerQrcode && (
       <PlayerQrcode 
         name={qrData.name} 

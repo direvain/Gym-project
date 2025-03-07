@@ -28,10 +28,10 @@ export function RenewSubscription() {
 
   return (
     <div>
-    <img className={style.homeImg} src="city_Gym_Icon.png" alt="My Gym Logo" width="200" height="200"/>
+    <img className={style.homeImg} src="./images/city_Gym_Icon.png" alt="My Gym Logo" width="200" height="200"/>
       <div className={style.reNewContainer}>
         <form className={style.reNewForm} onSubmit={handleSubmit(onSubmit)}>
-        <img src="cancel.png" alt="My Gym Logo" className={style.back_button} onClick={goBack}/>
+        <img src="./images/cancel.png" alt="My Gym Logo" className={style.back_button} onClick={goBack}/>
 
           <label className={style.reNewlabel}>اسم اللاعب</label>
           <input type='text' {...register('playerName')} placeholder='اسم اللاعب' />

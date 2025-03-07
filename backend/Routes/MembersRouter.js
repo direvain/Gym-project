@@ -33,54 +33,104 @@ function getAdjustedDate(year , month, day)
     year += Math.floor((month - 1) / 12); // Adjust year if month > 12
     month = ((month - 1) % 12) + 1; // Wrap month around to 1-12
     return `${year}/${month}/${day}`;
+    
 }
-const date = new Date();
-const year = date.getFullYear(); // Get the full year (e.g., 2025)
-const month = date.getMonth() + 1; // getMonth() returns 0-11, so add 1
-const day = date.getDate(); // Get the day of the month (1-31)
 
-const oneMonthEnd = getAdjustedDate(year, month + 1, day); // 1 month later
-const twoMonthsEnd = getAdjustedDate(year, month + 2, day); // 2 months later
-const threeMonthsEnd = getAdjustedDate(year, month + 3, day); // 3 months later
-const sixMonthsEnd = getAdjustedDate(year, month + 6, day); // 6 months later
-const oneYearEnd = getAdjustedDate(year + 1, month, day); // 1 year later 
+function calculateSubscriptionDates(subscriptionDuration) {
+    // Get current date
+    const date = new Date();
+    const year = date.getFullYear();
+    const month = date.getMonth() + 1; 
+    const day = date.getDate();
+    
+    // Current date formatted
+    const currentDate = `${year}/${month}/${day}`;
+    
+    // Calculate end date based on subscription duration
+    let endDate;
+    
+    switch(subscriptionDuration) {
+        case 1:
+            endDate = getAdjustedDate(year, month + 1, day);
+            break;
+        case 2:
+            endDate = getAdjustedDate(year, month + 2, day);
+            break;
+        case 3:
+            endDate = getAdjustedDate(year, month + 3, day);
+            break;
+        case 6:
+            endDate = getAdjustedDate(year, month + 6, day);
+            break;
+        default:
+            endDate = getAdjustedDate(year + 1, month, day); // Default to 1 year
+    }
+    
+    return{
+        startDate: currentDate, //  start
+        endDate : endDate,      // end 
+        currentTime: date // Return the date object itself
+    };}
+
+/// 
 
 MembersRouter.post("/addPlayer", async (req, res) => 
-{
-    try 
     {
-        const receivedData = req.body; // receive json file
-        // set subscriptionDuration
-        if      ( receivedData.subscriptionDuration == 1){receivedData.subscriptionDuration= `${year}/${month}/${day} - ${oneMonthEnd}`     ;}
-        else if ( receivedData.subscriptionDuration == 2){receivedData.subscriptionDuration= `${year}/${month}/${day} - ${twoMonthsEnd}`    ;}
-        else if ( receivedData.subscriptionDuration == 3){receivedData.subscriptionDuration= `${year}/${month}/${day} - ${threeMonthsEnd}`  ;}
-        else if ( receivedData.subscriptionDuration == 6){receivedData.subscriptionDuration= `${year}/${month}/${day} - ${sixMonthsEnd}`    ;}
-        else                                             {receivedData.subscriptionDuration= `${year}/${month}/${day} - ${oneYearEnd}`      ;}
-        receivedData.id = ('direvain'+(arabicToNumber(receivedData.playerName))) + date.getTime(); // create value for qr Code
+        try 
+        {
+            
+            const receivedData = req.body; // receive json file
 
-        try
-            {
-                const newplayer= new MembersModel
-                ({
-                    name: receivedData.playerName,
-                    age: receivedData.age,
-                    weight: receivedData.weight,
-                    phoneNumber: receivedData.phoneNumber,
-                    subscriptionDuration: receivedData.subscriptionDuration,
-                    qrCodeValue: receivedData.id
-                });
-                await newplayer.save();
-            }catch (error) {console.error('Error inserting sample member:', error);}
-        
-        res.status(201).json(receivedData);
-    } catch (error) {res.status(500).json({ message: "Server error", error: error.message });}
-});
+            // Get subscription dates and current time from the function
+            const subscriptionInfo = calculateSubscriptionDates(receivedData.subscriptionDuration);
 
-MembersRouter.get("/serachPlayer/:id", async (req, res)=>
-{
+            const start= subscriptionInfo.startDate;
+            const end = subscriptionInfo.endDate;
+            
+            /// Create unique ID with current timestamp
+            receivedData.id = 'direvain' + arabicToNumber(receivedData.playerName) + subscriptionInfo.currentTime.getTime();
+    
+            // Create the new player object
+            const newplayer = new MembersModel({
+                name: receivedData.playerName,
+                age: receivedData.age,
+                weight: receivedData.weight,
+                phoneNumber: receivedData.phoneNumber,
+                subscriptionDurationStart: start,
+                subscriptionDurationEnd: end,
+                qrCodeValue: receivedData.id
+            });
+            
+            // Save to database and only return success if this completes
+            await newplayer.save();
+            
+            // Only sends success response if database save succeeded
+            res.status(201).json({
+                name: newplayer.name,
+                subscriptionDurationStart: newplayer.subscriptionDurationStart,
+                subscriptionDurationEnd: newplayer.subscriptionDurationEnd,
+                qrCodeValue: newplayer.qrCodeValue
+            });
+        } 
+        catch (error) {
+            console.error('Error processing player registration:', error);
+            res.status(500).json({ 
+                message: "Failed to register player", 
+                error: error.message 
+            });
+        }
+    });
+
+///
+
+MembersRouter.get("/SearchforMembers/:id", async (req, res)=>
+{        console.log("playerFind");
+
     try 
     {
         const playerId = (req.params.id);
+        console.log("playerFind");
+
         const playerFind = await MembersModel.findOne({qrCodeValue : playerId},
             {
                 _id:0,

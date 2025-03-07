@@ -17,7 +17,11 @@ const memberSchema = new mongoose.Schema({
         type: String,
         unique: true
     },
-    subscriptionDuration: {
+    subscriptionDurationStart: {
+        type: String,
+        required: true
+    },
+    subscriptionDurationEnd: {
         type: String,
         required: true
     },

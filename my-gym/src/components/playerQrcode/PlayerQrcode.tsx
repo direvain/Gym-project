@@ -54,12 +54,12 @@ interface PlayerQrcodeProps {
           ref={cardRef}
           className={style.PlayerViewContainer}
           style={{
-            backgroundImage: 'url("qrcodeWallpaper.png")', // Add your image path here
+            backgroundImage: 'url("./images/qrcodeWallpaper.png")', // Add your image path here
             backgroundColor: '#000',
           }}
         >
           <img
-            src="city_Gym_Icon.png"
+            src="./images/city_Gym_Icon.png"
             alt="My Gym Logo"
             className={style.PlayerViewLogo}
             crossOrigin="anonymous" // Add cross-origin attribute for external images
@@ -79,7 +79,7 @@ interface PlayerQrcodeProps {
           <label className={style.playerLabel}>{name || "No Name"}</label>
           <label className={style.playerLabel}>{date || "No Date"}</label>
         </div>
-        <button onClick={saveAsImage} className={style.saveButton} disabled={isLoading}>
+        <button onClick={saveAsImage}className={`${style.saveButton}  ${style.buttonCreateandSave}`}disabled={isLoading}>
           {isLoading ? "جاري الحفظ..." : "حفظ الصورة"}
         </button>
       </div>
