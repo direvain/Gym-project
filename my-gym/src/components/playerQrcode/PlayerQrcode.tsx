@@ -47,9 +47,14 @@ interface PlayerQrcodeProps {
         }, 100); // Delay for the animation to start
       }
     };
+    function goBack(){
+      window.history.back();
+    }
   
     return (
       <div className={`${style.card} ${isPopping ? style.popAnimation : ''}`}>
+        <img src="./images/cancel.png" alt="Back" className={style.back_button} onClick={goBack} />
+
         <div
           ref={cardRef}
           className={style.PlayerViewContainer}

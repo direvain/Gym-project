@@ -10,7 +10,7 @@ const MembersRouter = express.Router();
 app.use(express.json()); // Parse JSON request bodies
 MembersRouter.use(cors({ // for receive api from front end 
     origin: 'http://localhost:3000', // Your frontend origin
-    methods: ['GET', 'POST', 'PUT', 'DELETE'],
+    methods: ['GET', 'POST', 'PUT', 'DELETE', 'PATCH'],
     credentials: true,
     optionsSuccessStatus: 204
 }));  
@@ -119,18 +119,42 @@ MembersRouter.post("/addPlayer", async (req, res) =>
                 error: error.message 
             });
         }
-    });
+});
 
-///
+MembersRouter.patch("/updateSubscription", async (req, res) => 
+{
+    try 
+    {
+        const playerInfo = req.body;
+        const newDate = new Date();
+        const playerSearch = await MembersModel.updateMany(
+            {qrCodeValue : playerInfo.value},
+                {
+                    $set:{
+                        subscriptionDurationStart:`${newDate.getFullYear()}/${newDate.getMonth() + 1}/${newDate.getDate()}`,
+                        subscriptionDurationEnd:playerInfo.date
+                    }
+                }
+        );
+        if (playerSearch.modifiedCount === 0) {
+            return res.status(404).json({ error: " فشل في تحديث البيانات" });
+        }
+        res.status(201).json({ 
+            message: "تم تحديث البيانات",
+            subscriptionDurationStart: `${newDate.getFullYear()}/${newDate.getMonth() + 1}/${newDate.getDate()}`
+        });
+
+    } catch (error) {
+        res.status(500).json({ error: " فشل في تحديث البيانات" });
+    }
+});
+
 
 MembersRouter.get("/SearchforMembers/:id", async (req, res)=>
-{        console.log("playerFind");
-
+{        
     try 
     {
         const playerId = (req.params.id);
-        console.log("playerFind");
-
         const playerFind = await MembersModel.findOne({qrCodeValue : playerId},
             {
                 _id:0,
@@ -138,12 +162,35 @@ MembersRouter.get("/SearchforMembers/:id", async (req, res)=>
                 age:1,
                 weight:1,
                 phoneNumber:1,
-                subscriptionDuration:1,
+                subscriptionDurationStart:1,
+                subscriptionDurationEnd:1,
                 qrCodeValue:1
             });
-        console.log(playerFind);
         res.status(201).json(playerFind);
     }catch (error) {{res.status(500).json({ message: "Server error", error: error.message })};}
 });
+
+// MembersRouter.get("/SearchforMembersName/:name", async (req, res)=>
+// {        
+//     try 
+//     {
+//         const playerName = req.params.name;
+//         const playersFind = await MembersModel.find({name: playerName},
+//             {
+//                 _id:0,
+//                 name: 1,
+//                 age: 1,
+//                 weight: 1,
+//                 phoneNumber: 1,
+//                 subscriptionDurationStart: 1,
+//                 subscriptionDurationEnd: 1,
+//                 qrCodeValue: 1
+//             });
+//         res.status(201).json(playersFind);
+//     } catch (error) {
+//         res.status(500).json({ message: "Server error", error: error.message });
+//     }
+// });
+
 
 export default MembersRouter;

@@ -1,6 +1,6 @@
 .card {
     position: fixed;
-    top: 45%;
+    top: 43%;
     left: 50%;
     transform: translate(-50%, -50%);
     background-color: #000;
@@ -76,6 +76,29 @@ button {
     cursor: pointer;
 }
 
+.back_button 
+{
+    
+    align-self: flex-start; /* Aligns to the left in an RTL container */
+    margin-bottom: 1px; /* Space between the button and the form elements */
+    cursor: pointer;
+    width: 24px; /* Adjust size as needed */
+    height: 24px; /* Adjust size as needed */
+    order: -1; /* Ensures it appears at the top of the flex container */
+}
+.back_button:hover {
+    background-color: #FFB01D;
+    border-radius: 50%;
+    transform: scale(1.15); /* Slightly enlarges the button */
+    box-shadow: 0 0 8px rgba(255, 176, 29, 0.5); /* Adds a subtle glow */
+    transition: background-color 0.3s ease, 
+                transform 0.3s ease, 
+                box-shadow 0.3s ease;
+}
+.back_button:active {
+    transform: scale(0.95); /* Creates a "press" effect */
+    background-color: #FFB01D; /* Solid color when pressed */
+  }
 @keyframes pop {
     0% {
         transform: translate(-50%, -50%) scale(1);

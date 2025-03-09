@@ -4,8 +4,6 @@ import style from './NewSubscription.module.css';
 import { handleError } from '../../utils/utils';
 import { ToastContainer } from 'react-toastify';
 import { PlayerQrcode } from "../../components/playerQrcode/PlayerQrcode";
-import { log } from "node:console";
-
 export function NewSubscription() {
 
   
@@ -39,7 +37,6 @@ export function NewSubscription() {
         body: JSON.stringify(values), // send values as JSON string
       });
       const result = await response.json();
-      console.log(result)
       if (response.ok) {
         onSuccess(result);
       } else {
