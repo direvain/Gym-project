@@ -89,7 +89,7 @@ export function PlayerQrcodeInfo({
             const result = await response.json();
 
             if (!response.ok) {
-                throw new Error(result.error || "Failed to update subscription");       
+                throw new Error(result.error || "Failed to update subscription ");       
             }
             setEndDate(newDate);
             setstartDate(result.subscriptionDurationStart);
