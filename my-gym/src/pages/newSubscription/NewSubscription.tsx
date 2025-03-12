@@ -36,12 +36,16 @@ export function NewSubscription() {
         },
         body: JSON.stringify(values), // send values as JSON string
       });
+      console.log(values)
       const result = await response.json();
       if (response.ok) {
         onSuccess(result);
-      } else {
-        onError("فشل التسجيل حاول مره اخره");
       }
+        // Check for specific error types
+        if (result.error === "duplicate_phone") {
+          onError("رقم الهاتف مسجل بالفعل");
+        }   
+      
     } catch (error) {
       onError("مشكلة بالشبكة فشل التسجيل");
     }

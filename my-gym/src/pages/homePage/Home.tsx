@@ -15,8 +15,6 @@ function Home() {
   const [qrCode, setQrCode] = useState<string>(""); // Store scanned QR code
   const [showPlayerQrcode, setShowPlayerQrcode] = useState(false); // Renamed from PlayerQrcodeInfo
   const [showPlayerQrcodeName, setShowPlayerQrcodeName] = useState(false); // Renamed from PlayerQrcodeInfo
-  const [playersList, setPlayersList] = useState<[]>([]);
-
   const [qrData, setQrData] = useState({ 
     value: "", 
     name: "", 
@@ -57,7 +55,6 @@ function Home() {
         if(response.ok)
         {
           const result = await response.json();
-          console.log(result)
           
           setqrDataPlayers({
             value: result[0].qrCodeValue,
@@ -69,15 +66,16 @@ function Home() {
             phoneNumber: result[0].phoneNumber,
             downloadName: result[0].name,
           });
+          
           setShowPlayerQrcode(false);
 
           setShowPlayerQrcodeName(true); // Changed from setPlayerQrcode
 
-        }else 
-        {
+        }else {
           handleError("لا يوجد لاعب");
           setShowPlayerQrcodeName(false);
-        }
+      }
+        
     } 
     catch (error) 
     {

@@ -28,26 +28,21 @@ function arabicToNumber(text)
     .map(char => arabicMap[char] !== undefined ? arabicMap[char] : '')
     .join('');
 }
-function getAdjustedDate(year , month, day) 
-{
-    year += Math.floor((month - 1) / 12); // Adjust year if month > 12
-    month = ((month - 1) % 12) + 1; // Wrap month around to 1-12
-    return `${year}/${month}/${day}`;
-    
-}
 
 function calculateSubscriptionDates(subscriptionDuration) {
+    // Convert subscriptionDuration string to a number
+    subscriptionDuration = Number(subscriptionDuration); 
+    
     // Get current date
     const date = new Date();
     const year = date.getFullYear();
     const month = date.getMonth() + 1; 
     const day = date.getDate();
     
-    // Current date formatted
     const currentDate = `${year}/${month}/${day}`;
     
-    // Calculate end date based on subscription duration
     let endDate;
+ 
     
     switch(subscriptionDuration) {
         case 1:
@@ -63,16 +58,60 @@ function calculateSubscriptionDates(subscriptionDuration) {
             endDate = getAdjustedDate(year, month + 6, day);
             break;
         default:
-            endDate = getAdjustedDate(year + 1, month, day); // Default to 1 year
+            endDate = getAdjustedDate(year + 3, month, day);
     }
     
-    return{
-        startDate: currentDate, //  start
-        endDate : endDate,      // end 
+    return {
+        startDate: currentDate, // start
+        endDate: endDate,      // end 
         currentTime: date // Return the date object itself
-    };}
+    };
+}
 
-/// 
+function getAdjustedDate(year , month, day) 
+{
+    year += Math.floor((month - 1) / 12); // Adjust year if month > 12
+    month = ((month - 1) % 12) + 1; // Wrap month around to 1-12
+    return `${year}/${month}/${day}`;
+    
+}
+async function deleteExpiredSubscriptions() {
+    try {
+        // Calculate the date 6 months ago
+        const sixMonthsAgo = new Date();
+        sixMonthsAgo.setMonth(sixMonthsAgo.getMonth() - 6);
+        const year = sixMonthsAgo.getFullYear();
+        const month = sixMonthsAgo.getMonth() + 1; // JavaScript months are 0-indexed
+        const day = sixMonthsAgo.getDate();
+        const cutoffDate = `${year}/${month}/${day}`;
+        
+        // Get all members
+        const allMembers = await Members.find({});
+        
+        // Track IDs of members to delete
+        const membersToDelete = [];
+        
+        for (const member of allMembers) {
+            if (!member.subscriptionDurationEnd) continue;
+            
+            // Parse the end date
+            const [endYear, endMonth, endDay] = member.subscriptionDurationEnd.split('/').map(Number);
+            const endDate = new Date(endYear, endMonth - 1, endDay);
+            
+            
+            if (endDate <= sixMonthsAgo) {
+                membersToDelete.push(member._id);
+            }
+        }
+        
+        if (membersToDelete.length > 0) {
+            const result = await Members.deleteMany({ _id: { $in: membersToDelete } });
+        } else {
+        }
+    } catch (error) {
+        throw error;
+    }
+}
 
 MembersRouter.post("/addPlayer", async (req, res) => 
     {
@@ -80,8 +119,15 @@ MembersRouter.post("/addPlayer", async (req, res) =>
         {
             
             const receivedData = req.body; // receive json file
-
             // Get subscription dates and current time from the function
+
+            const existingPlayer = await MembersModel.findOne({ phoneNumber: receivedData.phoneNumber });
+            if (existingPlayer) {
+                return res.status(400).json({ 
+                    message: "رقم الهاتف مسجل بالفعل", 
+                    error: "duplicate_phone" 
+                });
+            }
             const subscriptionInfo = calculateSubscriptionDates(receivedData.subscriptionDuration);
 
             const start= subscriptionInfo.startDate;
@@ -113,7 +159,6 @@ MembersRouter.post("/addPlayer", async (req, res) =>
             });
         } 
         catch (error) {
-            console.error('Error processing player registration:', error);
             res.status(500).json({ 
                 message: "Failed to register player", 
                 error: error.message 
@@ -170,27 +215,31 @@ MembersRouter.get("/SearchforMembers/:id", async (req, res)=>
     }catch (error) {{res.status(500).json({ message: "Server error", error: error.message })};}
 });
 
-// MembersRouter.get("/SearchforMembersName/:name", async (req, res)=>
-// {        
-//     try 
-//     {
-//         const playerName = req.params.name;
-//         const playersFind = await MembersModel.find({name: playerName},
-//             {
-//                 _id:0,
-//                 name: 1,
-//                 age: 1,
-//                 weight: 1,
-//                 phoneNumber: 1,
-//                 subscriptionDurationStart: 1,
-//                 subscriptionDurationEnd: 1,
-//                 qrCodeValue: 1
-//             });
-//         res.status(201).json(playersFind);
-//     } catch (error) {
-//         res.status(500).json({ message: "Server error", error: error.message });
-//     }
-// });
+MembersRouter.get("/SearchforMembersName/:name", async (req, res)=>
+{        
+    try 
+    {
+        const playerName = req.params.name;
+        const playersFind = await MembersModel.find({name: playerName},
+            {
+                _id:0,
+                name: 1,
+                age: 1,
+                weight: 1,
+                phoneNumber: 1,
+                subscriptionDurationStart: 1,
+                subscriptionDurationEnd: 1,
+                qrCodeValue: 1
+            });
 
+            if (playersFind.length === 0) {
+                return res.status(404).json({ message: "لا يوجد لاعب بهذا الاسم" });
+            }
+        res.status(201).json(playersFind);
+    } catch (error) {
+        res.status(500).json({ message: "Server error", error: error.message });
+    }
+});
 
+deleteExpiredSubscriptions();
 export default MembersRouter;
