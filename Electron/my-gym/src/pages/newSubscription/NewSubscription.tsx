@@ -66,7 +66,7 @@ export function NewSubscription() {
   };
   
   const onError = (message: string) => {
-    alert(message);
+    handleError(message);
   };
   const handleDownloadComplete = () => {
     setPlayerQrcode(false); // Hide the card

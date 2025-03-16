@@ -24,35 +24,35 @@
         "yup": "^1.6.1"
     },
     "build": {
-    "appId": "com.yourapp.id",
-    "productName": "City Gym",
-    "files": [
-        "**/*",
-        "!my-gym/**/*",
-        "!backend/**/*",
-        "!**/node_modules/**/*"
-    ],
-    "extraResources": [
-        {
-        "from": "my-gym/build",
-        "to": "build"
-        },
-        {
-        "from": "backend",
-        "to": "resources/backend"
-        },
-        {
-        "from": "assets",
-        "to": "assets"
-        }
-    ],
-    "win": {
-        "icon": "assets/city_Gym_Icon.ico",
-        "target": [
-        "nsis"
-        ]
-    }
+"appId": "com.yourapp.id",
+"productName": "City Gym",
+"files": [
+    "**/*",
+    "!my-gym/**/*",
+    "!backend/**/*",
+    "!**/node_modules/**/*"
+],
+"extraResources": [
+    {
+    "from": "my-gym/build",
+    "to": "resources/frontend"
     },
+    {
+    "from": "backend",
+    "to": "resources/backend"
+    },
+    {
+    "from": "assets",
+    "to": "assets"
+    }
+],
+"win": {
+    "icon": "assets/city_Gym_Icon.ico",
+    "target": [
+    "nsis"
+    ]
+}
+},
     "devDependencies": {
         "@types/react": "^19.0.10",
         "@types/react-dom": "^19.0.4",
