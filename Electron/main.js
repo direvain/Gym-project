@@ -6,10 +6,10 @@ const waitOn = require('wait-on');
 
 function createMainWindow() {
   mainWindow = new BrowserWindow({
-    title: 'City Gym',
-    width: 800,
-    height: 600,
-    icon:'./../my-gym/public/images/city_Gym_Icon.png',
+  title: 'City Gym',
+    width: 1366,
+    height: 768,
+    icon: path.join(__dirname, 'assets', 'city_Gym_Icon.png'),
     webPreferences: {
       contextIsolation: true,
       nodeIntegration: true,
@@ -47,4 +47,47 @@ app.whenReady().then(() => {
       createMainWindow();
     })
     .catch((err) => console.error('Error waiting for servers:', err));
+});
+
+app.on('window-all-closed', () => {
+  console.log("Cleaning up processes...");
+    if (backendProcess) {
+      try {
+        spawn('npm', ['stop'], {
+          cwd: path.join(__dirname, './backend'),
+          shell: true,
+        });
+      } catch (e) {
+        console.error("Error stopping backend:", e);
+        backendProcess.kill();
+      }
+    }
+    
+    if (reactProcess) {
+      try {
+        spawn('npm', ['stop'], {
+          cwd: path.join(__dirname, './my-gym'),
+          shell: true,
+        });
+      } catch (e) {
+        console.error("Error stopping React:", e);
+        reactProcess.kill();
+      }
+    }
+  
+    if (process.platform !== 'darwin') {
+      app.quit();
+    }
+});
+
+app.on('will-quit', () => {
+  // Make absolutely sure we kill all processes
+  if (backendProcess) backendProcess.kill();
+  if (reactProcess) reactProcess.kill();
+});
+
+app.on('activate', () => {
+  if (mainWindow === null) {
+    createMainWindow();
+  }
 });
